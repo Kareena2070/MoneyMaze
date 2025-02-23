@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance True or False Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            transition: color 0.3s ease-in-out;
+        }
+        h1:hover {
+            color: darkblue;
+        }
+        .container {
+            margin-top: 20px;
+            padding: 30px;
+            width: 400px;
+            height: 300px;
+            background-color: white;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        .question {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .true-btn {
+            background-color: green;
+            color: white;
+        }
+        .false-btn {
+            background-color: red;
+            color: white;
+        }
+        .true-btn:hover {
+            background-color: darkgreen;
+        }
+        .false-btn:hover {
+            background-color: darkred;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: black;
+        }
+        #congratulations {
+            display: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: darkgreen;
+            margin-top: 15px;
+        }
+        #next-button {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -60px;
+        }
+        #next-button:hover {
+            background-color: darkblue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Finance True or False Game</h1>
+    <div class="container">
+        <p class="question" id="question">Loading question...</p>
+        <button class="btn true-btn" onclick="checkAnswer(true)">True</button>
+        <button class="btn false-btn" onclick="checkAnswer(false)">False</button>
+        <p id="result"></p>
+        <p id="congratulations">Congratulations! You answered all questions correctly.</p>
+        <button id="next-button" onclick="proceedToNext()"><a href="game6.html">Proceed to Next</a></button>
+    </div>
+    <script>
+        const questions = [
+            { text: "Saving money is a form of expense.", answer: false },
+            { text: "Investing always guarantees a profit.", answer: false },
+            { text: "A budget helps manage income and expenses.", answer: true },
+            { text: "Credit card debt does not accumulate interest.", answer: false },
+            { text: "Diversifying your investments reduces risk.", answer: true },
+            { text: "Cryptocurrencies are risk-free investments.", answer: false },
+            { text: "Interest on loans is free money from the bank.", answer: false },
+            { text: "Having an emergency fund is a good financial practice.", answer: true },
+            { text: "The stock market only goes up over time.", answer: false },
+            { text: "A high credit score helps in getting better loan rates.", answer: true }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                document.getElementById("question").textContent = questions[currentQuestionIndex].text;
+            } else {
+                document.getElementById("congratulations").style.display = "block";
+                document.getElementById("next-button").style.display = "block";
+            }
+        }
+
+        function checkAnswer(userAnswer) {
+            let resultText = document.getElementById("result");
+            if (questions[currentQuestionIndex].answer === userAnswer) {
+                resultText.textContent = "Correct!";
+                resultText.style.color = "green";
+                currentQuestionIndex++;
+                setTimeout(loadQuestion, 1000);
+            } else {
+                resultText.textContent = "Incorrect, try again!";
+                resultText.style.color = "red";
+            }
+        }
+
+        function proceedToNext() {
+            alert("Proceeding to the next level!");
+        }
+
+        document.addEventListener("DOMContentLoaded", loadQuestion);
+    </script>
+</body>
+</html>

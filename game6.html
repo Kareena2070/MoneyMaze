@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Score Journey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            transition: color 0.3s ease-in-out;
+        }
+        h1:hover {
+            color: darkblue;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        .option {
+            padding: 15px;
+            background-color: lightblue;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, background-color 0.3s;
+        }
+        .option:hover {
+            transform: scale(1.1);
+            background-color: deepskyblue;
+            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+        }
+        #score {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        #mission-success {
+            display: none;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffcc00;
+            text-shadow: 0 0 15px #ff9900, 0 0 25px #084105, 0 0 35px #cc3300;
+            margin-top: 30px;
+            animation: lightning 1s infinite alternate;
+        }
+        @keyframes lightning {
+            0% { text-shadow: 0 0 15px #5100ff, 0 0 25px #ff6600, 0 0 35px #cc3300; }
+            100% { text-shadow: 0 0 20px #ffcc00, 0 0 30px #72080f, 0 0 40px #ff6600; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Credit Score Journey</h1>
+    <p>Make financial choices and see how they impact your credit score!</p>
+    <p id="score">Credit Score: 600</p>
+    <div class="container">
+        <div class="option" onclick="updateScore(30)">Pay Bills on Time ✅ (+30)</div>
+        <div class="option" onclick="updateScore(-40)">Miss Loan Payment ❌ (-40)</div>
+        <div class="option" onclick="updateScore(20)">Use Credit Responsibly 💳 (+20)</div>
+        <div class="option" onclick="updateScore(-30)">Max Out Credit Card ⚠️ (-30)</div>
+    </div>
+    <p id="mission-success">🎉 Mission Successful! 🚀⚡🔥</p>
+    <script>
+        let score = 600;
+        let attempts = 0;
+        function updateScore(change) {
+            score += change;
+            document.getElementById("score").innerText = "Credit Score: " + score;
+            attempts++;
+            if (attempts >= 3) {
+                document.getElementById("mission-success").style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

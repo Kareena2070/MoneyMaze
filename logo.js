@@ -15,18 +15,34 @@ function loginUser() {
         alert('Please fill all fields!');
     }
 }
+function loginUser() {
+    let age = document.getElementById("age").value;
 
-function showFinanceInfo() {
-    const info = `Finance is the management of money, including activities like earning, saving, investing, and spending wisely.
+    if (age === "" || isNaN(age)) {
+        alert("Please enter a valid age.");
+        return;
+    }
 
-Types of Finance:
-1. Personal Finance - Managing individual budgets and savings.
-2. Corporate Finance - Managing company finances.
-3. Public Finance - Government revenue and expenditures.
+    age = parseInt(age);
 
-💡 Remember, good financial habits start young!`;
-    alert(info);
+    if (age <= 12) {
+        window.location.href = "1.1.html";  // Redirect to 1.1.html for kids under 12
+    } else {
+        window.location.href = "game1.html";  // Redirect to game1.html for older kids
+    }
 }
+
+// function showFinanceInfo() {
+//     const info = `Finance is the management of money, including activities like earning, saving, investing, and spending wisely.
+
+// Types of Finance:
+// 1. Personal Finance - Managing individual budgets and savings.
+// 2. Corporate Finance - Managing company finances.
+// 3. Public Finance - Government revenue and expenditures.
+
+// 💡 Remember, good financial habits start young!`;
+//     alert(info);
+// }
 
 // Hide main content initially
 document.getElementById('main-content').style.display = 'none';

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Puzzle Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #eef2f7;
+            padding: 20px;
+        }
+        .game-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .puzzle-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .puzzle-piece, .drop-zone, button {
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+        }
+        .puzzle-piece:hover, .drop-zone:hover, button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+        }
+        .puzzle-piece {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            text-align: center;
+            cursor: grab;
+            font-size: 18px;
+        }
+        .drop-zone {
+            background: #e3f2fd;
+            border: 2px dashed #007bff;
+            padding: 20px;
+            min-width: 200px;
+            border-radius: 5px;
+        }
+        .drop-zone.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+        .drop-zone.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        .hidden {
+            display: none;
+        }
+        #prev-question, #next-question {
+            margin-top: 20px;
+        }
+        #congratulations {
+            font-size: 20px;
+            color: #28a745;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Financial Puzzle Game</h1>
+        <p>Drag and drop the correct financial terms to their descriptions.</p>
+        
+        <div id="game-area">
+            <button id="start-game">Start Game</button>
+            <div id="puzzle" class="hidden">
+                <h2>Match the correct pairs:</h2>
+                <div id="question-container"></div>
+                <button id="prev-question">Previous</button>
+                <button id="next-question">Next</button>
+                <p id="congratulations" class="hidden">Congratulations! You completed the quiz!</p>
+                <button id="next-quiz" class="hidden">Next Quiz</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const startButton = document.getElementById('start-game');
+        const puzzle = document.getElementById('puzzle');
+        const questionContainer = document.getElementById('question-container');
+        const prevButton = document.getElementById('prev-question');
+        const nextButton = document.getElementById('next-question');
+        const congratulations = document.getElementById('congratulations');
+        const nextQuizButton = document.getElementById('next-quiz');
+        let currentQuestion = 0;
+
+        const questions = [
+            {
+                terms: ["Earning", "Saving", "Investing", "Spending", "Budgeting", "Debt"],
+                definitions: [
+                    "Getting money from work",
+                    "Keeping money for future use",
+                    "Growing money over time",
+                    "Using money to buy things",
+                    "Planning expenses wisely",
+                    "Owing money that needs to be paid back"
+                ]
+            },
+            {
+                terms: ["Interest", "Credit Score", "Inflation", "Taxes", "Loan", "Insurance"],
+                definitions: [
+                    "Extra money paid on a loan or earned on savings",
+                    "A number that represents creditworthiness",
+                    "Increase in prices over time",
+                    "Money paid to the government",
+                    "Borrowed money that must be paid back",
+                    "Protection against financial losses"
+                ]
+            }
+        ];
+
+        function loadQuestion(index) {
+            questionContainer.innerHTML = "";
+            let question = questions[index];
+            let termsHTML = '<div class="puzzle-container">';
+            question.terms.forEach((term, i) => {
+                termsHTML += `<div class='puzzle-piece' draggable='true' id='p${i}' data-id='${i}'>${term}</div>`;
+            });
+            termsHTML += '</div><h3>Drag to match:</h3><div class="puzzle-container">';
+            question.definitions.forEach((def, i) => {
+                termsHTML += `<div class='drop-zone' data-id='${i}'>${def}</div>`;
+            });
+            termsHTML += '</div>';
+            questionContainer.innerHTML = termsHTML;
+            addDragAndDrop();
+        }
+
+        function addDragAndDrop() {
+            document.querySelectorAll('.puzzle-piece').forEach(piece => {
+                piece.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text', piece.dataset.id);
+                });
+            });
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                });
+                zone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    const draggedId = e.dataTransfer.getData('text');
+                    if (draggedId === zone.dataset.id) {
+                        zone.innerHTML = document.getElementById(`p${draggedId}`).textContent;
+                        zone.classList.add('correct');
+                    } else {
+                        zone.classList.add('incorrect');
+                    }
+                });
+            });
+        }
+
+        startButton.addEventListener('click', () => {
+            startButton.classList.add('hidden');
+            puzzle.classList.remove('hidden');
+            loadQuestion(currentQuestion);
+        });
+        
+        nextButton.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion(currentQuestion);
+            } else {
+                congratulations.classList.remove('hidden');
+                nextQuizButton.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

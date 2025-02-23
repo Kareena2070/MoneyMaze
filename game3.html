@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magical Credit Quest</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #eaf6ff;
+            color: #333;
+            padding: 20px;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 28px;
+            transition: color 0.3s, transform 0.2s;
+            color: #2c3e50;
+        }
+        h1:hover {
+            color: #e74c3c;
+            transform: scale(1.08);
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .option, #nextLevel {
+            display: block;
+            background: #3498db;
+            color: white;
+            padding: 12px 24px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            font-size: 16px;
+        }
+        .option:hover, #nextLevel:hover {
+            background: #1abc9c;
+            transform: scale(1.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        #nextLevel {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Magical Credit Quest</h1>
+        <p class="question" id="question">Loading question...</p>
+        <div class="options-container">
+            <button class="option" onclick="checkAnswer(0)">Option 1</button>
+            <button class="option" onclick="checkAnswer(1)">Option 2</button>
+        </div>
+        <p id="result"></p>
+        <button id="nextLevel" onclick="nextLevel()">Next Level ➡️</button>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "A wizard offers you a magical loan with 50% interest. Do you take it?",
+                options: ["Yes, I need the gold!", "No, that's too risky!"],
+                correct: 1
+            },
+            {
+                question: "A fairy gives you a no-interest student loan to learn spells. Do you take it?",
+                options: ["Yes, education is valuable!", "No, I don't want any loan!"],
+                correct: 0
+            },
+            {
+                question: "A goblin promises you instant riches but with hidden fees. Do you trust him?",
+                options: ["Yes, I love quick money!", "No, this sounds like a scam!"],
+                correct: 1
+            },
+            {
+                question: "A merchant offers you a magical credit card with unlimited spending. Do you accept?",
+                options: ["Yes, free money!", "No, I need to check the terms first."],
+                correct: 1
+            },
+            {
+                question: "A dragon hoards treasure and offers you a loan with collateral. Do you agree?",
+                options: ["Yes, I’ll risk it!", "No, I don’t want to lose my belongings!"],
+                correct: 1
+            },
+            {
+                question: "A wise old elf advises you to build a savings fund. Do you listen?",
+                options: ["Yes, saving is smart!", "No, I prefer spending now."],
+                correct: 0
+            },
+            {
+                question: "An enchanted bank offers you an investment with high returns but no details. Do you invest?",
+                options: ["Yes, sounds great!", "No, I need more information."],
+                correct: 1
+            }
+        ];
+        let currentQuestion = 0;
+        function loadQuestion() {
+            document.getElementById("question").textContent = questions[currentQuestion].question;
+            document.querySelectorAll(".option").forEach((button, index) => {
+                button.textContent = questions[currentQuestion].options[index];
+            });
+            document.getElementById("result").textContent = "";
+        }
+        function checkAnswer(choice) {
+            if (choice === questions[currentQuestion].correct) {
+                document.getElementById("result").textContent = "✅ Correct! You're a wise wizard!";
+            } else {
+                document.getElementById("result").textContent = "❌ Wrong! Beware of debt traps!";
+            }
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                setTimeout(loadQuestion, 1500);
+            } else {
+                setTimeout(() => {
+                    document.getElementById("question").textContent = "🎉 Congratulations! You completed the quest!";
+                    document.querySelectorAll(".option").forEach(button => button.style.display = "none");
+                    document.getElementById("result").textContent = "You're now a financial wizard!";
+                    document.getElementById("nextLevel").style.display = "block";
+                }, 1500);
+            }
+        }
+        function nextLevel() {
+            // alert("Next level coming soon! Stay tuned for more magical financial challenges!");
+        }
+        loadQuestion();
+    </script>
+</body>
+</html>

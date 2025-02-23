@@ -182,6 +182,22 @@
     }
 }
 
+function loginUser() {
+    let age = document.getElementById("age").value;
+
+    if (age === "" || isNaN(age)) {
+        alert("Please enter a valid age.");
+        return;
+    }
+
+    age = parseInt(age);
+
+    if (age <= 12) {
+        window.location.href = "1.1.html";  // Redirect to 1.1.html for kids under 12
+    } else {
+        window.location.href = "game1.html";  // Redirect to game1.html for older kids
+    }
+}
 
         // Hide main content initially
         document.getElementById('main-content').style.display = 'none';

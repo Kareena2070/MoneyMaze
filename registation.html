@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .registration-form {
+            display: none;
+            margin: 20px auto;
+            width: 400px;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            background-color: #f9f9f9;
+        }
+        input[type="text"], input[type="number"], input[type="email"] {
+            width: 95%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            width: 98%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        button {
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to the Registration Page</h1>
+    <button onclick="showForm()">Registration</button>
+
+    <div class="registration-form" id="registrationForm">
+        <h2>Fill Your Details</h2>
+        <form onsubmit="submitForm(event)">
+            <input type="text" id="name" placeholder="Name" required><br>
+            <input type="text" id="school" placeholder="School" required><br>
+            <input type="text" id="class" placeholder="Class" required><br>
+            <input type="number" id="age" placeholder="Age" required><br>
+            <input type="number" id="number" placeholder="Phone Number" required><br>
+            <input type="email" id="email" placeholder="Email" required><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <script>
+        function showForm() {
+            document.getElementById("registrationForm").style.display = "block";
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            // Get user input values
+            const name = document.getElementById("name").value;
+            const school = document.getElementById("school").value;
+            const studentClass = document.getElementById("class").value;
+            const age = document.getElementById("age").value;
+            const number = document.getElementById("number").value;
+            const email = document.getElementById("email").value;
+
+            // Store user's name in localStorage
+            localStorage.setItem('userName', name);
+
+            // Redirect to index.html after submission
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>

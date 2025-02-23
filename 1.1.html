@@ -12,18 +12,24 @@
             align-items: center;
             height: 100vh;
             background-color: #f4f4f4;
+            flex-direction: column;
         }
-        .game-container {
-            width: 70%;
+        .container {
+            text-align: center;
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
         }
-        h2 {
-            margin-bottom: 20px;
+        .game-container {
+            display: none;
+            width: 60%;
+            max-width: 500px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }
         .big-div {
             display: flex;
@@ -31,14 +37,14 @@
             justify-content: center;
             gap: 15px;
             margin-bottom: 20px;
-            padding: 10px;
+            padding: 12px;
             border: 2px solid black;
             border-radius: 10px;
             background-color: #f9f9f9;
         }
         .drag-item {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             cursor: grab;
             transition: transform 0.2s ease;
         }
@@ -53,44 +59,55 @@
         }
         .drop-box {
             width: 45%;
-            height: 200px;
+            height: 180px;
             border: 2px dashed gray;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
             background-color: #fff;
+            padding: 10px;
         }
         .drop-box h3 {
             width: 100%;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-align: center;
         }
         .message {
             display: none;
-            font-size: 20px;
+            font-size: 18px;
             color: green;
             font-weight: bold;
-            position: absolute;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 15px;
         }
         .next-quiz {
             display: none;
-            margin-top: 20px;
+            margin-top: 15px;
             padding: 10px 20px;
-            font-size: 18px;
+            font-size: 16px;
             background-color: #28a745;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
+        .next-quiz a {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body> 
-    <div class="game-container">
+    <div class="container" id="main-content">
+        <h2>Hi Star ✨</h2>
+        <p>⭐✨</p>
+        <p>Let's start learning about finance!</p>
+        <button class="finance-btn" onclick="startGame()"> What is Finance? Level 1</button>
+    </div>
+
+    <div class="game-container" id="gameContainer">
         <h2>Sort the Coins and Notes!</h2>
-        
         <div class="big-div" id="items">
             <img src="2coin.png" alt="Coin" class="drag-item" draggable="true" ondragstart="drag(event)" id="coin1">
             <img src="10note.png" alt="Note" class="drag-item" draggable="true" ondragstart="drag(event)" id="note1"> 
@@ -107,11 +124,16 @@
                 <h3>Notes</h3>
             </div>
         </div>
+        <p class="message" id="message">Congratulations! You sorted all items correctly! 🎉</p>
         <button class="next-quiz" id="nextQuiz"><a href="1.2.html">Next Quiz</a></button>
-        <div class="message" id="message">Congratulations! You sorted all items correctly! 🎉</div>
     </div>
 
     <script>
+        function startGame() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('gameContainer').style.display = 'block';
+        }
+        
         function allowDrop(event) {
             event.preventDefault();
         }
@@ -129,8 +151,6 @@
             if ((type === 'coin' && draggedElement.alt === 'Coin') || (type === 'note' && draggedElement.alt === 'Note')) {
                 dropBox.appendChild(draggedElement);
                 checkCompletion();
-            } else {
-                // alert("Place the correct item in the correct box!");
             }
         }
 
@@ -143,7 +163,7 @@
                 document.getElementById("message").style.display = "block";
                 setTimeout(() => {
                     document.getElementById("nextQuiz").style.display = "block";
-                }, 3000);
+                }, 2000);
             }
         }
     </script>
